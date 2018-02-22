@@ -1,0 +1,83 @@
+<terra-alert-panel></terra-alert-panel>
+<terra-base-toolbar>
+    <div class="btn-group" role="group">
+        <terra-button inputIcon="icon-save"
+                      inputTooltipText="{{ 'save' | translate:lang }}"
+                      (outputClicked)="saveSettings()">
+        </terra-button>
+
+        <terra-button [inputCaption]="_warehouseConfig.currentWarehouse.name"></terra-button>
+    </div>
+</terra-base-toolbar>
+
+<div>
+    <terra-portlet>
+        <terra-portlet inputPortletHeader="{{'deviceSettings'| translate:lang}}">
+            <div class="form-button-wrapper">
+                <terra-text-input [inputIsDisabled]="false"
+                                  [inputIsRequired]="true"
+                                  [(ngModel)]="_soapUrl"
+                                  inputName="{{'soapUrlInput'| translate:lang}}">
+                </terra-text-input>
+            </div>
+            <div class="form-button-wrapper">
+                <terra-text-input inputName="{{'deviceIdInput'| translate:lang}}"
+                                  [inputIsRequired]="true"
+                                  [(ngModel)]="_deviceId">
+                </terra-text-input>
+            </div>
+        </terra-portlet>
+        <terra-portlet inputPortletHeader="{{'ledSettings'| translate:lang}}">
+            <div class="form-button-wrapper">
+                <terra-select-box inputName="{{ 'currentLEDSpeedInput' | translate:lang }}"
+                                  [inputListBoxValues]="_ledCurrentSpeedValues"
+                                  [(ngModel)]="_selectedCurrentLedSpeed">
+                </terra-select-box>
+            </div>
+            <div class="form-button-wrapper">
+                <terra-select-box inputName="{{ 'nextLEDSpeedInput' | translate:lang }}"
+                                  [inputListBoxValues]="_ledNextSpeedValues"
+                                  [(ngModel)]="_selectedNextLedSpeed">>
+                </terra-select-box>
+            </div>
+        </terra-portlet>
+    </terra-portlet>
+</div>
+
+<hr>
+
+<div>
+    <terra-portlet inputPortletHeader="{{'storageLocations' | translate:lang}}">
+        <terra-portlet>
+            <table class="table">
+                <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">LED ID</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of [1,2,3,4,5,6]">
+                        <th class="row-padding">{{ i }}</th>
+                        <td class="row-padding">Mark</td>
+                        <td>
+                            <terra-text-input [inputIsDisabled]="false"
+                                              [inputIsRequired]="true"
+                                              [(ngModel)]="_soapUrl"
+                                              inputName="LED ID">
+                            </terra-text-input>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </terra-portlet>
+
+        <!--<terra-simple-table #table-->
+                            <!--[inputIsStriped]="true"-->
+                            <!--[inputHasCheckboxes]="false"-->
+                            <!--[inputUseHighlighting]="true"-->
+                            <!--[inputEnableHotkeys]="true"-->
+                            <!--[inputHeaderList]="_headerList"-->
+                            <!--[inputRowList]="_rowList">-->
+        <!--</terra-simple-table>-->
+    </terra-portlet>
+</div>

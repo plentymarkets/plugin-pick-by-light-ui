@@ -1,0 +1,12 @@
+<div>
+    <div class="btn-group-menu" role="group">
+        <template ngFor let-button [ngForOf]="_warehouseConfig.warehouseList" let-last="last">
+            <terra-button inputCaption="{{button.caption}}"
+                          inputIcon="{{button.icon}}"
+                          (outputClicked)="buttonClickHandler(button)"
+                          [inputIsActive]="button.isActive"
+                          [inputIsDivider]="button.isDivider && !last">
+            </terra-button>
+        </template>
+    </div>
+</div>

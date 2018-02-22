@@ -10,6 +10,11 @@ import { HttpModule } from '@angular/http';
 import { TranslationModule } from 'angular-l10n';
 import { FormsModule } from '@angular/forms';
 import { LocalizationConfig } from './core/localization/terra-localization.config';
+import {WarehouseSelectorViewModule} from "./view/warehouse-selector-view/warehouse-selector-view-module";
+import {WarehouseConfig} from "./config/warehouse.config";
+import {WarehouseService} from "./core/rest/warehouse/warehouse.service";
+import {WarehouseDetailViewModule} from "./view/warehouse-detail-view/warehouse-detail-view.module";
+import {SettingsService} from "./core/rest/settings/settings.service";
 
 @NgModule({
     imports:      [
@@ -17,7 +22,9 @@ import { LocalizationConfig } from './core/localization/terra-localization.confi
         HttpModule,
         FormsModule,
         TranslationModule.forRoot(),
-        TerraComponentsModule.forRoot()
+        TerraComponentsModule.forRoot(),
+        WarehouseSelectorViewModule.forRoot(),
+        WarehouseDetailViewModule.forRoot()
     ],
     declarations: [
         PluginTerraBasicComponent,
@@ -30,7 +37,10 @@ import { LocalizationConfig } from './core/localization/terra-localization.confi
             useFactory: initLocalization,
             deps:       [LocalizationConfig],
             multi:      true
-        }
+        },
+        WarehouseConfig,
+        WarehouseService,
+        SettingsService
     ],
     bootstrap:    [
         PluginTerraBasicComponent

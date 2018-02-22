@@ -3,6 +3,8 @@ import {
     Translation,
     TranslationService
 } from 'angular-l10n';
+import {WarehouseConfig} from "./config/warehouse.config";
+import {WarehouseSelectorViewModule} from "./view/warehouse-selector-view/warehouse-selector-view-module";
 
 @Component({
     selector: 'plugin-terra-basic-app',
@@ -11,17 +13,21 @@ import {
 })
 export class PluginTerraBasicComponent extends Translation implements OnInit
 {
-    private myVariable:string;
-
-    public constructor(public translation:TranslationService)
+    public constructor(private _warehouseConfig:WarehouseConfig,
+                       public translation:TranslationService)
     {
         super(translation);
 
-        this.myVariable = "Test123";
     }
 
     ngOnInit()
     {
-
+        this._warehouseConfig.addView({
+            module: WarehouseSelectorViewModule.forRoot(),
+            defaultWidth: 'col-xs-2',
+            name: this.translation.translate('warehouses'),
+            mainComponentName: WarehouseSelectorViewModule.getMainComponent(),
+            isBackgroundColorGrey: true
+        });
     }
 }

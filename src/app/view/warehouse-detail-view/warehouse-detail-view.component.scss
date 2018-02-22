@@ -1,0 +1,24 @@
+.row-container
+{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  margin: 0;
+}
+
+.form-button-wrapper
+{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  terra-select-box
+  {
+    width: 100%;
+  }
+  terra-text-input
+  {
+    width: 100%;
+  }
+}
