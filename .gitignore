@@ -2,24 +2,14 @@
 
 # compiled output
 /dist
-/component-documentation/build
-/component-documentation/icons
 /tmp
 
 # dependencies
 /node_modules
 /bower_components
-/src/**/*.js
-/src/**/*.js.map
-/src/**/*.d.ts
 
 # IDEs and editors
-/.idea/
-*.iml
-.project
-.classpath
-*.launch
-.settings/
+/.idea
 
 # misc
 /.sass-cache
@@ -29,6 +19,10 @@
 npm-debug.log
 testem.log
 /typings
+*.log
+
+# should be fixed in VM
+/ui-backend
 
 # e2e
 /e2e/*.js
@@ -37,3 +31,8 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+# ignore builds
+*.tar.gz
+.branchname
+build.properties
