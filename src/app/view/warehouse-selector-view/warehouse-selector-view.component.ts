@@ -8,6 +8,7 @@ import {WarehouseConfig} from "../../config/warehouse.config";
 import {WarehouseInterface} from "../../core/rest/warehouse/data/warehouse.interface";
 import {WarehouseService} from "../../core/rest/warehouse/warehouse.service";
 import {WarehouseDetailViewModule} from "../warehouse-detail-view/warehouse-detail-view.module";
+import {isNullOrUndefined} from "util";
 /**
  * Created by ninoplettenberg on 22.02.18.
  */
@@ -23,6 +24,8 @@ export class WarehouseSelectorViewComponent extends Translation implements OnIni
     @Input() parameter: any;
 
     private _alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+
+    private _lastButton:TerraButtonInterface;
 
     constructor(private _warehouseConfig:WarehouseConfig,
                 private _warehouseService:WarehouseService,
@@ -76,7 +79,17 @@ export class WarehouseSelectorViewComponent extends Translation implements OnIni
 
     private buttonClickHandler(button:TerraButtonInterface):void
     {
+        if(!isNullOrUndefined(this._lastButton))
+        {
+            this._lastButton.isActive = false;
+        }
+        if(button.isDivider)
+        {
+            return;
+        }
+        button.isActive = true;
         button.clickFunction();
+        this._lastButton = button;
     }
 
     private showAlert(msg:string, type:string) : void
