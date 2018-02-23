@@ -1,7 +1,8 @@
 <terra-alert-panel></terra-alert-panel>
-<terra-base-toolbar inputIsSticky="true">
+<terra-base-toolbar>
     <div class="btn-group" role="group">
         <terra-button inputIcon="icon-save"
+                      inputTooltipPlacement="bottom"
                       inputTooltipText="{{ 'save' | translate:lang }}"
                       (outputClicked)="saveSettings()">
         </terra-button>
