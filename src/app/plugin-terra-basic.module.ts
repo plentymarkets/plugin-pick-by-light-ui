@@ -4,7 +4,6 @@ import {
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { PluginTerraBasicComponent } from './plugin-terra-basic.component';
-import { StartComponent } from './start/start.component';
 import { TerraComponentsModule } from '@plentymarkets/terra-components/app/terra-components.module';
 import { HttpModule } from '@angular/http';
 import { TranslationModule } from 'angular-l10n';
@@ -28,7 +27,6 @@ import {SettingsService} from "./core/rest/settings/settings.service";
     ],
     declarations: [
         PluginTerraBasicComponent,
-        StartComponent
     ],
     providers:    [
         LocalizationConfig,

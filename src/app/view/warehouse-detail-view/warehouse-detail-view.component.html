@@ -57,8 +57,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let ledConfig of _ledConfig">
-                        <th class="row-padding">{{ ledConfig.id }}</th>
-                        <td class="row-padding">{{ ledConfig.name }}</td>
+                        <th class="fixed-table">{{ ledConfig.id }}</th>
+                        <td class="fixed-table">{{ ledConfig.name }}</td>
                         <td>
                             <terra-text-input [inputIsDisabled]="false"
                                               [inputIsRequired]="false"
