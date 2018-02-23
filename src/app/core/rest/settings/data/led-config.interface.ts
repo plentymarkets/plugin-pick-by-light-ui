@@ -6,5 +6,5 @@ export interface LedConfigInterface
 {
     id: number;
     name: string;
-    led: string;
+    ledId: string;
 }
