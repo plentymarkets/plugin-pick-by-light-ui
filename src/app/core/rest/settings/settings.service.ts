@@ -10,12 +10,12 @@ import {PluginDataInterface} from "./data/plugin-data.interface";
 @Injectable()
 export class SettingsService extends TerraBaseService
 {
-    private token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI4ZGU4OWQ5OWRhNmI1YjQyNGM2Nzk2MDRhNWZmNTM2ZTFkMGFkYzJjNThhMDEyNjQyY2YxYjlkNDI5MGRhMTI4MGZlZWNhNDE0NTRmNTk0In0.eyJhdWQiOiIxIiwianRpIjoiYjhkZTg5ZDk5ZGE2YjViNDI0YzY3OTYwNGE1ZmY1MzZlMWQwYWRjMmM1OGEwMTI2NDJjZjFiOWQ0MjkwZGExMjgwZmVlY2E0MTQ1NGY1OTQiLCJpYXQiOjE1MTkyODgyMTQsIm5iZiI6MTUxOTI4ODIxNCwiZXhwIjoxNTE5Mzc0NjEzLCJzdWIiOiIzIiwic2NvcGVzIjpbIioiXX0.q1117s-ZJBW6UDXMEEl4GBVbB25FpXMDGlSIdj7MTaHzExhOEOzHcGJ-Nghxy6p2DuLxjpqdMj8sVE52zGE7jS3z995IHa8Kol18yyFKM5UFSnSF9EnidJC6WJC6q2nF2K72Wy3VsBYuabACR2TGXgL8WO4M7awYQfiRsc0eEd9OnQShEGNCawy4Oy6x2lWrKfYL_9nFY_FG2Vx5CtrKiE7D-QTK0ASwwBFYWdVfQBL2XrPqWUkmWDU-2HUWtjLfxqVeCw_bkHwM38F6Elrdu9lF2yeh8uscPYUBRLjbPXmAU6NGrp0IPZZapakQVarIqbFhX3k3aMRsdzeQcdv3OccAkDCnUkLXjxPM-vmkaiFShfJT5AX32qldmx-gmW6TBL4Uf2i1qN_opwqLVoMO0yZWXLex679uSdnqPqPunYFwWQIU4xFXagychnFNGDdIVk3SThRS4HPfDsWlCjQ-y3YkpY3Fy5CW1fdQTmdfqr8c8gw3XKc5C7jjo0pwqfWsQWN88WM0Zi8wDTTdvG4_t-2o6dm798qSwISAjVy6LnqOHlQEiOJLphfmYk8ABDl00lUdh6Mrdxh7HB_bS0XdMsnFAmmR98A0iVYJ7o0HvUWQe7He_V55r-Tot3Ins0HWFacWpo8A9A2SCg1ye7bGkxPcPXCj9EByt5KoBY2D3M8';
+    private token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU5ZGU1NzNmODRhMjU3NjUyYTJiMzUxNzc1ZTE3OTIxMGZjYzZiODRkNzk5ZTBiNTc3NTA3NjUxOWY1ZTQ4ZDQzNWJjNDhjNTgxNjViNDNkIn0.eyJhdWQiOiIxIiwianRpIjoiZTlkZTU3M2Y4NGEyNTc2NTJhMmIzNTE3NzVlMTc5MjEwZmNjNmI4NGQ3OTllMGI1Nzc1MDc2NTE5ZjVlNDhkNDM1YmM0OGM1ODE2NWI0M2QiLCJpYXQiOjE1MTkzNzUwMDQsIm5iZiI6MTUxOTM3NTAwNCwiZXhwIjoxNTE5NDYxNDA0LCJzdWIiOiIzIiwic2NvcGVzIjpbIioiXX0.XMzVRQOTPEgcwez7I24Bm6Xp18lmb7K6ZHWdzSoR5X0mMH7DADxW_5es_1eBsQA1nOeT4Xl3GrNBxzD9NTPVXzzXLQrPXovZs--XU4p3LyMJFhW_FCmbi_JSEndq7clWQP2g7GgBCn5xSG_fJhJzFE08rxNtz-W8Xd-XztVY3rzZsTClOtQ6cYCWX8dvQGGgHX5HsJSrBRSemrafAbOEZhOEWLQ5SqyVIZbCjstJx9GOu4o5zRguCyackM6ZLDUoYmuUysjZsR7253dC0ORffNRK6Q0jWyBG5cPt2OjofOgWdfOKNICUn96oQVspbBpZMublkP3q8zAtfk0yI2mi50M63_Ppk0CA24kTggDbOnywPSf0E7jiiAHUvSIJ61wse6Dw_YJ8OnH5bilgW2NoK7_ayPpQxOez3P_GKu8FYGnZPDG0vWwRm-mZQvuY6-lvtQJ6--Tnn6mis8kDVVoqnA0MghzBADbsYPgD9PT8gliYhnITisvV57Tz2fn3zW1BfRPGrEoNoHBbZfPpW9VroN-PQuebR0MwwsjQUgYDMmXVt3Cv4Uy-p3jYlehfZQBYIRJgdz7X_q7-lwy5YXkVBB34Gybpyao8h2ifzARdbYl9lSsjRp4UTke1Ri-WwljkBUf1NOjxvo-AhvKFAJ7wKrdvlrVn1lBqGiZEuCEmh3E';
 
     constructor(private _loadingSpinnerService:TerraLoadingSpinnerService,
                 private _http:Http)
     {
-        super(_loadingSpinnerService, _http, '');
+        super(_loadingSpinnerService, _http, '/rest/fulfillment/pickByLight/settings');
 
         this.setAuthorization();
 
@@ -29,7 +29,7 @@ export class SettingsService extends TerraBaseService
 
     public getConfigForWarehouse(id:string) : Observable<PluginDataInterface>
     {
-        let url = this.url + '/' + id;
+        let url = this.url + '?warehouseId=' + id;
 
         return this.mapRequest(
             this.http.get(url,{
@@ -39,14 +39,18 @@ export class SettingsService extends TerraBaseService
         );
     }
 
-    public saveConfigForWarehouse(id: string, content: PluginDataInterface) : Observable<any>
+    public saveConfigForWarehouse(content: PluginDataInterface) : Observable<any>
     {
-        let url = this.url + '/' + id;
+        let url = this.url;
 
         return this.mapRequest(
             this.http.post(url, {
-                header: this.headers,
-                body: content
+                warehouseId: Number(content.warehouseId),
+                settings: content.settings,
+                config: content.config
+            },
+            {
+                headers: this.headers
             })
         );
     }

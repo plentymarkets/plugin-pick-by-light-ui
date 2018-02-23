@@ -2,7 +2,7 @@ import {Translation, TranslationService} from "angular-l10n";
 import {Component, Input, OnInit} from "@angular/core";
 import {
     TerraSplitViewComponentInterface, TerraMultiSplitViewInterface, TerraButtonInterface,
-    TerraAlertComponent
+    TerraAlertComponent, TerraLoadingSpinnerService
 } from "@plentymarkets/terra-components";
 import {WarehouseConfig} from "../../config/warehouse.config";
 import {WarehouseInterface} from "../../core/rest/warehouse/data/warehouse.interface";
@@ -26,7 +26,8 @@ export class WarehouseSelectorViewComponent extends Translation implements OnIni
 
     constructor(private _warehouseConfig:WarehouseConfig,
                 private _warehouseService:WarehouseService,
-                public translation:TranslationService)
+                public translation:TranslationService,
+                private _loadingSpinnerService:TerraLoadingSpinnerService)
     {
         super(translation);
     }
@@ -39,7 +40,7 @@ export class WarehouseSelectorViewComponent extends Translation implements OnIni
     private loadWarehouseList()
     {
         this._warehouseConfig.warehouseList = [];
-
+        this._loadingSpinnerService.start();
         this._warehouseService.getWarehouses().subscribe((response:Array<WarehouseInterface>) =>
         {
             for(let i = 0; i < response.length; i++)
@@ -62,13 +63,15 @@ export class WarehouseSelectorViewComponent extends Translation implements OnIni
                         this._warehouseConfig.showWarehouseDetails(warehouse.id, warehouse);
                     }
                 });
+                this._loadingSpinnerService.stop();
             }
         },
-            (error:any) =>
-            {
-                let message = this.translation.translate("notSaved") + '<br>' + error;
-                this.showAlert(message, 'danger')
-            });
+        (error:any) =>
+        {
+            let message = error;
+            this.showAlert(message, 'danger');
+            this._loadingSpinnerService.stop();
+        });
     }
 
     private buttonClickHandler(button:TerraButtonInterface):void
@@ -84,6 +87,12 @@ export class WarehouseSelectorViewComponent extends Translation implements OnIni
             dismissOnTimeout: 5000,
             identifier: 'info'
         });
+
+        this.emptyAlertArray();
     }
 
+    public emptyAlertArray()
+    {
+        setTimeout(() => this._alert.closeAlertByIdentifier('info'), 5000);
+    }
 }

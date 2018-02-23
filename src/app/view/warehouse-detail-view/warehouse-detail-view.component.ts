@@ -3,12 +3,13 @@ import {Component, OnInit} from "@angular/core";
 import {WarehouseConfig} from "../../config/warehouse.config";
 import {
     TerraSelectBoxValueInterface, TerraPagerInterface, TerraAlertComponent,
-    TerraSimpleTableHeaderCellInterface, TerraSimpleTableCellInterface, TerraSimpleTableRowInterface
+    TerraSimpleTableHeaderCellInterface, TerraSimpleTableCellInterface, TerraSimpleTableRowInterface, TerraLoadingSpinnerService
 } from "@plentymarkets/terra-components";
 import {SettingsService} from "../../core/rest/settings/settings.service";
 import {SettingsInterface} from "../../core/rest/settings/data/settings.interface";
 import {PluginDataInterface} from "../../core/rest/settings/data/plugin-data.interface";
 import {LedConfigInterface} from "../../core/rest/settings/data/led-config.interface";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 /**
  * Created by ninoplettenberg on 22.02.18.
  */
@@ -35,21 +36,54 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
     private _selectedNextLedSpeed:any;
     private _deviceId:any;
     private _soapUrl:any;
+    private _ledConfig:Array<LedConfigInterface>;
 
     private _alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    private _headerList:Array<TerraSimpleTableHeaderCellInterface>;
-    private _rowList:Array<TerraSimpleTableRowInterface<LedConfigInterface>>;
+    private deviceForm:FormGroup;
 
     constructor(public translation:TranslationService,
                 private _warehouseConfig:WarehouseConfig,
-                private _settingsService:SettingsService)
+                private _settingsService:SettingsService,
+                private _loadingSpinnerService:TerraLoadingSpinnerService)
     {
         super(translation);
     }
 
+    private loadPickByLightSettingsForWarehouse(warehouseId:string)
+    {
+        this._loadingSpinnerService.start();
+        this._settingsService.getConfigForWarehouse(warehouseId).subscribe((response:PluginDataInterface) => {
+            this.setValuesToView(response);
+            this._loadingSpinnerService.stop();
+        }, (error:any) =>
+        {
+            let message = error;
+            this.showAlert(message, 'danger');
+            this._loadingSpinnerService.stop();
+        });
+    }
+
+    private setValuesToView(data:PluginDataInterface)
+    {
+        this._soapUrl = data.settings.soapURL;
+        this._deviceId = data.settings.deviceId;
+
+        this._selectedCurrentLedSpeed = data.settings.currentLEDspeed;
+        this._selectedNextLedSpeed = data.settings.nextLEDspeed;
+
+        this._ledConfig = [];
+
+        for (let storageLocation of data.config)
+        {
+            this._ledConfig.push(storageLocation);
+        }
+    }
+
     ngOnInit()
     {
+        this.loadPickByLightSettingsForWarehouse(this._warehouseConfig.currendWarehouseId);
+
         this._ledCurrentSpeedValues = [
             {
                 caption: this.translation.translate("ledSpeedStatic"),
@@ -91,57 +125,6 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
                 value: WarehouseDetailViewComponent.LED_OFF
             }
         ];
-
-        this._headerList = [];
-
-        this._headerList = [
-            {
-                caption: 'ID',
-                width: "100"
-            },
-            {
-                caption: 'Lagerort Name',
-                width: "100"
-            },
-            {
-                caption: 'LED ID',
-                width: "100"
-            }
-        ];
-
-        this._rowList = [
-            this.createRowForEntry({
-                id: 0,
-                name: "test",
-                led: "A1"
-            }),
-            this.createRowForEntry({
-                id: 0,
-                name: "test",
-                led: "A1"
-            })
-        ];
-
-
-    }
-
-    private createRowForEntry(config:LedConfigInterface) : TerraSimpleTableRowInterface<LedConfigInterface>
-    {
-        let cellList:Array<TerraSimpleTableCellInterface> = [];
-
-        cellList.push(this.createCellForAtribute(config.id));
-        cellList.push(this.createCellForAtribute(config.name));
-
-        return {
-            cellList: cellList
-        }
-    }
-
-    private createCellForAtribute(data:any):TerraSimpleTableCellInterface
-    {
-        return {
-            caption: data
-        }
     }
 
     /**
@@ -156,7 +139,7 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
     public saveSettings()
     {
         this._settingsService
-            .saveConfigForWarehouse(this._warehouseConfig.currendWarehouseId, this.collectDataToSave())
+            .saveConfigForWarehouse(this.collectDataToSave())
             .subscribe(() =>
             {
                 this.showAlert(this.translation.translate("saved"),'success');
@@ -173,7 +156,7 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
         return {
             warehouseId : this._warehouseConfig.currendWarehouseId,
             settings : this.collectDeviceData(),
-            config: []
+            config: this._ledConfig
         };
     }
 
@@ -195,5 +178,21 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
             dismissOnTimeout: 5000,
             identifier: 'info'
         });
+        this.emptyAlertArray();
+    }
+
+    public emptyAlertArray()
+    {
+        setTimeout(() => this._alert.closeAlertByIdentifier('info'), 5000);
+    }
+
+    get soapURL()
+    {
+        return this.deviceForm.get('soapURL');
+    }
+
+    get deviceId()
+    {
+        return this.deviceForm.get('deviceId');
     }
 }

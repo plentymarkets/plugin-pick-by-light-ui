@@ -56,13 +56,13 @@
                     <th scope="col">LED ID</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let i of [1,2,3,4,5,6]">
-                        <th class="row-padding">{{ i }}</th>
-                        <td class="row-padding">Mark</td>
+                    <tr *ngFor="let ledConfig of _ledConfig">
+                        <th class="row-padding">{{ ledConfig.id }}</th>
+                        <td class="row-padding">{{ ledConfig.name }}</td>
                         <td>
                             <terra-text-input [inputIsDisabled]="false"
-                                              [inputIsRequired]="true"
-                                              [(ngModel)]="_soapUrl"
+                                              [inputIsRequired]="false"
+                                              [(ngModel)]="ledConfig.led"
                                               inputName="LED ID">
                             </terra-text-input>
                         </td>
@@ -70,14 +70,5 @@
                 </tbody>
             </table>
         </terra-portlet>
-
-        <!--<terra-simple-table #table-->
-                            <!--[inputIsStriped]="true"-->
-                            <!--[inputHasCheckboxes]="false"-->
-                            <!--[inputUseHighlighting]="true"-->
-                            <!--[inputEnableHotkeys]="true"-->
-                            <!--[inputHeaderList]="_headerList"-->
-                            <!--[inputRowList]="_rowList">-->
-        <!--</terra-simple-table>-->
     </terra-portlet>
 </div>
