@@ -50,36 +50,6 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
         super(translation);
     }
 
-    private loadPickByLightSettingsForWarehouse(warehouseId:string)
-    {
-        this._loadingSpinnerService.start();
-        this._settingsService.getConfigForWarehouse(warehouseId).subscribe((response:PluginDataInterface) => {
-            this.setValuesToView(response);
-            this._loadingSpinnerService.stop();
-        }, (error:any) =>
-        {
-            let message = error;
-            this.showAlert(message, 'danger');
-            this._loadingSpinnerService.stop();
-        });
-    }
-
-    private setValuesToView(data:PluginDataInterface)
-    {
-        this._soapUrl = data.settings.soapURL;
-        this._deviceId = data.settings.deviceId;
-
-        this._selectedCurrentLedSpeed = data.settings.currentLEDspeed;
-        this._selectedNextLedSpeed = data.settings.nextLEDspeed;
-
-        this._ledConfig = [];
-
-        for (let storageLocation of data.config)
-        {
-            this._ledConfig.push(storageLocation);
-        }
-    }
-
     ngOnInit()
     {
         this.loadPickByLightSettingsForWarehouse(this._warehouseConfig.currendWarehouseId);
@@ -125,6 +95,36 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
                 value: WarehouseDetailViewComponent.LED_OFF
             }
         ];
+    }
+
+    private loadPickByLightSettingsForWarehouse(warehouseId:string)
+    {
+        this._loadingSpinnerService.start();
+        this._settingsService.getConfigForWarehouse(warehouseId).subscribe((response:PluginDataInterface) => {
+            this.setValuesToView(response);
+            this._loadingSpinnerService.stop();
+        }, (error:any) =>
+        {
+            let message = error;
+            this.showAlert(message, 'danger');
+            this._loadingSpinnerService.stop();
+        });
+    }
+
+    private setValuesToView(data:PluginDataInterface)
+    {
+        this._soapUrl = data.settings.soapURL;
+        this._deviceId = data.settings.deviceId;
+
+        this._selectedCurrentLedSpeed = data.settings.currentLEDspeed;
+        this._selectedNextLedSpeed = data.settings.nextLEDspeed;
+
+        this._ledConfig = [];
+
+        for (let storageLocation of data.config)
+        {
+            this._ledConfig.push(storageLocation);
+        }
     }
 
     /**
@@ -194,5 +194,10 @@ export class WarehouseDetailViewComponent extends Translation implements OnInit
     get deviceId()
     {
         return this.deviceForm.get('deviceId');
+    }
+
+    get currentWarehouseButtonCaption()
+    {
+        return "ID: " + this._warehouseConfig.currendWarehouseId;
     }
 }
